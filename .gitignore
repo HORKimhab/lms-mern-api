@@ -3,3 +3,4 @@ node_modules
 # ignore all files that have “.env” anywhere in their name
 *.env*
 !.env.example
+dist
