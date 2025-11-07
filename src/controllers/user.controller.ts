@@ -29,11 +29,14 @@ export const register = asyncHandler(async (req: AuthRequest, res: Response) => 
   const userRepository = AppDataSource.getRepository(User);
 
   const existingUser = await userRepository.findOne({
-    where: { userEmail }, // <-- must match User entity column name
+    where: { userEmail },
   });
 
   if (existingUser) {
-    throw new AppError('Email already exists', 400);
+    return res.status(400).json({
+      success: false,
+      message: "User name or user email already exists"
+    });
   }
 
   const user = userRepository.create({

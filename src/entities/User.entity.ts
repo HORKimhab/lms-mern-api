@@ -10,8 +10,13 @@ import {
   } from 'typeorm';
   import bcrypt from 'bcryptjs';
   import jwt from 'jsonwebtoken';
+  import dotenv from 'dotenv';
 //   import { Course } from './Course.entity';
 //   import { Payment } from './Payment.entity';
+
+
+
+dotenv.config();
 
   export enum UserRole {
     USER = 'USER',
