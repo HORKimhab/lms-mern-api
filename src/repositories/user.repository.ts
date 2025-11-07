@@ -5,7 +5,7 @@ import { User } from '../entities/User.entity';
 export const UserRepository = AppDataSource.getRepository(User).extend({
   async findByEmail(email: string): Promise<User | null> {
     return this.createQueryBuilder('user')
-      .where('user.userEmail = :userEmail', { email })
+      .where('user.userEmail = :email', { email })
       .addSelect('user.password')
       .getOne();
   },

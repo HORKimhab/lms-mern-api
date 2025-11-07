@@ -79,18 +79,18 @@ export const register = asyncHandler(async (req: AuthRequest, res: Response) => 
   res.status(201).json({
     success: true,
     message: 'User registered successfully',
-    user: userWithoutPassword,
+    data: userWithoutPassword,
   });
 });
 
 export const login = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const { email, password }: LoginDTO = req.body;
+  const { userEmail, password }: LoginDTO = req.body;
 
-  if (!email || !password) {
+  if (!userEmail || !password) {
     throw new AppError('All fields are required', 400);
   }
 
-  const user = await UserRepository.findByEmail(email);
+  const user = await UserRepository.findByEmail(userEmail);
 
   if (!user || !(await user.comparePassword(password))) {
     throw new AppError('Email or password do not match', 400);
