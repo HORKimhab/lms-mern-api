@@ -17,10 +17,10 @@ const cookieOptions = {
 export const register = asyncHandler(async (req: AuthRequest, res: Response) => {
   const { userName, userEmail, password }: RegisterDTO = req.body;
 
-  console.log('req.body', req.body)
-  console.log('userName', userName)
+  console.log('req.body', req.body);
+  console.log('userName', userName);
   // console.log('email', email)
-  console.log('password', password)
+  console.log('password', password);
 
   if (!userName || !userEmail || !password) {
     throw new AppError('All fields are required', 400);
@@ -35,7 +35,7 @@ export const register = asyncHandler(async (req: AuthRequest, res: Response) => 
   if (existingUser) {
     return res.status(400).json({
       success: false,
-      message: "User name or user email already exists"
+      message: 'User name or user email already exists',
     });
   }
 
@@ -96,17 +96,22 @@ export const login = asyncHandler(async (req: AuthRequest, res: Response) => {
     throw new AppError('Email or password do not match', 400);
   }
 
-  const token = user.generateJWTToken();
+  const accessToken = user.generateJWTToken();
 
   // Remove password from response
   const { password: _, ...userWithoutPassword } = user;
 
-  res.cookie('token', token, cookieOptions);
+  res.cookie('token', accessToken, cookieOptions);
+
+  console.log('token', accessToken);
 
   res.status(200).json({
     success: true,
     message: 'User logged in successfully',
-    user: userWithoutPassword,
+    data: {
+      accessToken,
+      user: userWithoutPassword,
+    },
   });
 });
 
